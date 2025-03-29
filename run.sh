@@ -15,6 +15,16 @@ if [ ! -f "file.list" ]; then
 	exit
 fi
 
+# Check if phone connected via ADB
+if ! adb devices | grep -q "device$"; then
+    echo -n "Please connect you phone."
+    # Wait until phone is connected
+	while ! adb devices | grep -q "device$"; do
+		echo -n "."
+		sleep 1
+	done
+fi
+
 #Get all files from the phone
 for i in `cat file.list`
 	do
